@@ -1,0 +1,9 @@
+version: "3"
+
+services:
+  feedragon:
+    image: ghcr.io/johannes-qvarford/feedragon:used-by-monitorss
+    container_name: feedragon
+    ports:
+      - "9999:8080"
+    restart: unless-stopped

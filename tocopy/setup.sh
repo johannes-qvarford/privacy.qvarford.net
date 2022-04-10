@@ -79,6 +79,15 @@ function install-nitter() {
     docker-compose up -d
 }
 
+function install-feedragon() {
+    echo "What is your personal access token for accessing private repositories?"
+    read -s PAT
+    echo "$PAT" | docker login ghcr.io -u johannes-qvarford --password-stdin
+    unset PAT
+    cd ~/tocopy/feedragon
+    docker-compose up -d
+}
+
 disable-root-login
 install-certbot
 install-docker
