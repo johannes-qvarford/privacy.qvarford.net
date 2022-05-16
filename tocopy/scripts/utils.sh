@@ -1,6 +1,6 @@
 function sync-app() {
     mkdir -p ~/apps
-    sudo cp -R ~/tocopy/$1 ~/apps/$1
+    cp -R ~/tocopy/$1 ~/apps
 }
 
 function clone-app() {
@@ -13,4 +13,8 @@ function dc() {
     app=$1
     shift
     docker-compose -f ~/apps/$app/docker-compose.yml "$@"
+}
+
+function cd-app() {
+    cd ~/apps/$1
 }
