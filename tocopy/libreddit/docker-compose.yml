@@ -1,0 +1,19 @@
+version: "3"
+
+services:
+  web:
+    image: spikecodes/libreddit:latest
+    container_name: "libreddit"
+    ports:
+      - 8888:8080
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "-q", "--tries=1", "http://localhost:8080/settings"]
+      interval: 5m
+      timeout: 3s
+    environment:
+      - LIBREDDIT_DEFAULT_THEME=gold
+      - LIBREDDIT_DEFAULT_FRONT_PAGE=all
+      - LIBREDDIT_DEFAULT_SHOW_NSFW=on
+      - LIBREDDIT_DEFAULT_USE_HLS=on
+      - LIBREDDIT_DEFAULT_HIDE_HLS_NOTIFICATION=on
+    restart: unless-stopped
