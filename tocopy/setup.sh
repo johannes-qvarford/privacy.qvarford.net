@@ -14,6 +14,7 @@ echo "Now running as jq..."
 bash tocopy/scripts/disable-root-login.sh
 bash tocopy/scripts/docker.sh
 bash tocopy/scripts/certbot.sh
+bash tocopy/scripts/reboot.sh
 bash tocopy/scripts/apps/nginx.sh
 bash tocopy/scripts/apps/invidious.sh
 bash tocopy/scripts/apps/nitter.sh

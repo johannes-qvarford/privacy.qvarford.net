@@ -1,0 +1,1 @@
+echo '05 00 * * * root sudo shutdown -r' | sudo tee -a /etc/crontab
