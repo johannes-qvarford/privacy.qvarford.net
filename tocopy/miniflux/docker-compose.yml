@@ -1,0 +1,34 @@
+version: '3.4'
+services:
+  miniflux:
+    image: miniflux/miniflux:latest
+    ports:
+      - "7777:8080"
+    depends_on:
+      - miniflux-db
+    environment:
+      - DATABASE_URL=postgres://miniflux:secret@miniflux-db/miniflux?sslmode=disable
+      - RUN_MIGRATIONS=1
+      - CREATE_ADMIN=1
+      - ADMIN_USERNAME=jq
+      - ADMIN_PASSWORD=change_me
+      - POLLING_SCHEDULER=entry_frequency
+      - POLLING_FREQUENCY=10
+      - BATCH_SIZE=5
+      - BASE_URL=https://miniflux.privacy.qvarford.net
+    restart: unless-stopped
+
+  miniflux-db:
+    image: postgres:15
+    environment:
+      - POSTGRES_USER=miniflux
+      - POSTGRES_PASSWORD=secret
+    volumes:
+      - miniflux-db:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "miniflux"]
+      interval: 10s
+      start_period: 30s
+    restart: unless-stopped
+volumes:
+  miniflux-db:

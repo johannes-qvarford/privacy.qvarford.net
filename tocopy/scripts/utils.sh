@@ -9,6 +9,11 @@ function clone-app() {
     git checkout "$2"
 }
 
+function clone-app-with-name() {
+    cd ~/apps
+    git clone "$1" "$2"
+}
+
 function dc() {
     app=$1
     shift

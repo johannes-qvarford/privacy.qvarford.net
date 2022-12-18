@@ -18,5 +18,5 @@ bash tocopy/scripts/reboot.sh
 bash tocopy/scripts/apps/nginx.sh
 bash tocopy/scripts/apps/invidious.sh
 bash tocopy/scripts/apps/nitter.sh
-bash tocopy/scripts/apps/feedragon.sh
 bash tocopy/scripts/apps/libreddit.sh
+bash tocopy/scripts/apps/miniflux.sh
