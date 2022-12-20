@@ -1,0 +1,29 @@
+services:
+  app:
+    image: monica
+    depends_on:
+      - monica-db
+    ports:
+      - 6666:80
+    environment:
+      - DB_HOST=monica-db
+      - DB_USERNAME=usermonica
+      - DB_PASSWORD=secret
+      # Will be generated on the server.
+      - APP_KEY=
+      - APP_URL=https://monica.privacy.qvarford.net
+      - APP_ENV=production
+    volumes:
+      - /home/jq/apps/monica/storage:/var/www/html/storage
+    restart: always
+
+  monica-db:
+    image: mysql:5.7
+    environment:
+      - MYSQL_RANDOM_ROOT_PASSWORD=true
+      - MYSQL_DATABASE=monica
+      - MYSQL_USER=usermonica
+      - MYSQL_PASSWORD=secret
+    volumes:
+      - /home/jq/apps/monica/mysql:/var/lib/mysql
+    restart: always
