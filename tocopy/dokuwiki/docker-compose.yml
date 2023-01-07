@@ -1,0 +1,14 @@
+version: "2.1"
+services:
+  dokuwiki:
+    image: lscr.io/linuxserver/dokuwiki:latest
+    container_name: dokuwiki
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/London
+    volumes:
+      - /home/jq/apps/dokuwiki/config:/config
+    ports:
+      - 5555:80
+    restart: unless-stopped

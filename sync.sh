@@ -1,3 +1,3 @@
 #!/bin/bash
 
-scp -rp tocopy jq@privacy.qvarford.net:./
+rsync -avh ./tocopy jq@privacy.qvarford.net:./
