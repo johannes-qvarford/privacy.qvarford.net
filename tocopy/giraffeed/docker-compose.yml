@@ -1,0 +1,9 @@
+version: "3"
+
+services:
+  giraffeed:
+    image: ghcr.io/johannes-qvarford/giraffeed:main
+    container_name: giraffeed
+    ports:
+      - "9999:4567"
+    restart: unless-stopped
