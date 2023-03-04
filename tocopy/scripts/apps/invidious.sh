@@ -1,8 +1,11 @@
 source tocopy/scripts/utils.sh
 
 function install-invidious() {
-    clone-app https://github.com/johannes-qvarford/invidious.git jq
-    dc invidious up -d
+    cd ~/apps
+    git clone https://github.com/iv-org/invidious.git
+    cd-app invidious
+    sync-app invidious
+    docker-compose -f docker-compose-prod.yml up -d
 }
 
 install-invidious

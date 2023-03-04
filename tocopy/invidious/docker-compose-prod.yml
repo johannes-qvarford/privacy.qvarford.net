@@ -1,0 +1,70 @@
+# Warning: This docker-compose file is made for development purposes.
+# Using it will build an image from the locally cloned repository.
+#
+# If you want to use Invidious in production, see the docker-compose.yml file provided
+# in the installation documentation: https://docs.invidious.io/installation/
+
+version: "3"
+services:
+
+  invidious:
+    image: quay.io/invidious/invidious:latest
+    # image: quay.io/invidious/invidious:latest # non-ARM64/AArch64 devices
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      # Please read the following file for a comprehensive list of all available
+      # configuration options and their associated syntax:
+      # https://github.com/iv-org/invidious/blob/master/config/config.example.yml
+      INVIDIOUS_CONFIG: |
+        db:
+          dbname: invidious
+          user: kemal
+          password: kemal
+          host: invidious-db
+          port: 5432
+        check_tables: true
+        https_only: true
+        hsts: false
+        popular_enabled: false
+        captcha_enabled: false
+        default_user_preferences:
+          captions: ["English", "Swedish", ""]
+          feed_menu: ["Subscriptions", "Playlists"]
+          default_home: Subscriptions
+          comments: ["", ""]
+          player_style: invidious
+          related_videos: false
+          autoplay: true
+          continue: true
+          continue_autoplay: true
+          unseen_only: true
+          automatic_instance_redirect: true
+        external_port: 443
+        domain: invidious.privacy.qvarford.net
+        # statistics_enabled: false
+    healthcheck:
+      test: wget -nv --tries=1 --spider http://127.0.0.1:3000/api/v1/comments/jNQXAC9IVRw || exit 1
+      interval: 30s
+      timeout: 5s
+      retries: 2
+    depends_on:
+      - invidious-db
+
+  invidious-db:
+    image: docker.io/library/postgres:14
+    restart: unless-stopped
+    volumes:
+      - postgresdata:/var/lib/postgresql/data
+      - ./config/sql:/config/sql
+      - ./docker/init-invidious-db.sh:/docker-entrypoint-initdb.d/init-invidious-db.sh
+    environment:
+      POSTGRES_DB: invidious
+      POSTGRES_USER: kemal
+      POSTGRES_PASSWORD: kemal
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB"]
+
+volumes:
+  postgresdata:

@@ -1,6 +1,9 @@
 source tocopy/scripts/utils.sh
 
-dc invidious down
 cd-app invidious
+docker-compose -f docker-compose-prod.yml down
+git stash
 git pull
-dc invidious up -d
+docker-compose -f docker-compose-prod.yml pull
+sync-app invidious
+docker-compose -f docker-compose-prod.yml up -d
