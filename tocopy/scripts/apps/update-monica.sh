@@ -2,6 +2,7 @@ source tocopy/scripts/utils.sh
 
 update-monica() {
     sync-app monica
+    dc monica pull
     cd-app monica
     app_key=$(cat .app_key)
     sed -i 's,APP_KEY=$,APP_KEY='$app_key',g' docker-compose.yml
