@@ -1,0 +1,15 @@
+
+main {
+  max-width: 500px;
+  margin: auto;
+  font-size: 20px;
+  padding-top: 100px;
+}
+
+header {
+  text-align: center;
+}
+
+button {
+  margin: 12px;
+}

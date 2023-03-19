@@ -8,6 +8,6 @@ services:
       - 443:443
     volumes:
       - /home/jq/tocopy/nginx/sites-enabled:/etc/nginx/conf.d
-      - /home/jq/apps/nginx/raw:/var/raw
+      - /home/jq/apps/nginx/out:/var/raw
       - /etc/letsencrypt:/ssl:ro
     restart: unless-stopped
