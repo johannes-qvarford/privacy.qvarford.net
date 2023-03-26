@@ -20,7 +20,7 @@ export default function Home() {
         <nav>
             <ul className="list-group">
                 <Item link='https://miniflux.privacy.qvarford.net' name='Miniflux'/>
-                <Item link='https://invidious.privacy.qvarford.net' name='Invidous'/>
+                <Item link='https://invidious.privacy.qvarford.net' name='Invidious'/>
                 <Item link='https://libreddit.privacy.qvarford.net/r/rust' name='Libreddit'/>
                 <Item link='https://nitter.privacy.qvarford.net' name='Nitter'/>
                 <Item link='https://dokuwiki.privacy.qvarford.net' name='Dokuwiki'/>

@@ -8,6 +8,11 @@ main {
 
 header {
   text-align: center;
+  margin: 20px;
+}
+
+nav li {
+  text-align: center;
 }
 
 button {
