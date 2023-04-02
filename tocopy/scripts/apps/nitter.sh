@@ -1,9 +1,9 @@
 source tocopy/scripts/utils.sh
 
-function install-nitter() {
+function func() {
     dc nitter down
     sync-app nitter
     dc nitter up -d
 }
 
-install-nitter
+func

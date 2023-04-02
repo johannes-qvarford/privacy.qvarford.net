@@ -1,6 +1,6 @@
 source tocopy/scripts/utils.sh
 
-function install-monica() {
+function func() {
     sync-app monica
     cd-app monica
     app_key=$(echo -n 'base64:'; openssl rand -base64 32)
@@ -11,4 +11,4 @@ function install-monica() {
     #dc monica exec app php artisan setup:production
 }
 
-install-monica
+func

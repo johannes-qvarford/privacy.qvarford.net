@@ -1,6 +1,6 @@
 source tocopy/scripts/utils.sh
 
-function install-nginx() {
+function func() {
     sudo ufw allow 80
     sudo ufw allow 443
     dc nginx down
@@ -8,4 +8,4 @@ function install-nginx() {
     dc nginx up -d
 }
 
-install-nginx
+func

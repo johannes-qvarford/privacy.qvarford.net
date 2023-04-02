@@ -1,6 +1,6 @@
 source tocopy/scripts/utils.sh
 
-function install-giraffeed() {
+function func() {
     echo "What is your personal access token for accessing private repositories?"
     read -s PAT
     echo "$PAT" | docker login ghcr.io -u johannes-qvarford --password-stdin
@@ -10,4 +10,4 @@ function install-giraffeed() {
     dc giraffeed up -d
 }
 
-install-giraffeed
+func

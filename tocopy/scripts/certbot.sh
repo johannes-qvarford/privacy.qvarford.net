@@ -1,4 +1,4 @@
-function install-certbot() {
+function func() {
     sudo snap install core
     sudo snap refresh core
     sudo snap install --classic certbot
@@ -21,4 +21,4 @@ EOF
     sudo certbot renew --dry-run
 }
 
-install-certbot
+func

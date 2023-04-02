@@ -1,8 +1,8 @@
 source tocopy/scripts/utils.sh
 
-function install-miniflux() {
+function func() {
     sync-app miniflux
     dc miniflux up -d
 }
 
-install-miniflux
+func

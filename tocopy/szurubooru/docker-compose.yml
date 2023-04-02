@@ -1,0 +1,36 @@
+version: '2'
+
+services:
+  szurubooru-server:
+    image: szurubooru/server:latest
+    depends_on:
+      - szurubooru-sql
+    environment:
+      POSTGRES_HOST: szurubooru-sql
+      POSTGRES_USER:
+      POSTGRES_PASSWORD:
+      THREADS:
+    volumes:
+      - "${MOUNT_DATA}:/data"
+      - "./config.yaml:/opt/app/config.yaml"
+
+  szurubooru-client:
+    image: szurubooru/client:latest
+    depends_on:
+      - szurubooru-server
+    environment:
+      BACKEND_HOST: szurubooru-server
+      BASE_URL:
+    volumes:
+      - "${MOUNT_DATA}:/data:ro"
+    ports:
+      - "${PORT}:80"
+
+  szurubooru-sql:
+    image: postgres:11-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER:
+      POSTGRES_PASSWORD:
+    volumes:
+      - "${MOUNT_SQL}:/var/lib/postgresql/data"
