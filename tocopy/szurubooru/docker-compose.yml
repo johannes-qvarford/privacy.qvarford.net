@@ -3,6 +3,7 @@ version: '2'
 services:
   szurubooru-server:
     image: szurubooru/server:latest
+    restart: unless-stopped
     depends_on:
       - szurubooru-sql
     environment:
@@ -16,6 +17,7 @@ services:
 
   szurubooru-client:
     image: szurubooru/client:latest
+    restart: unless-stopped
     depends_on:
       - szurubooru-server
     environment:
