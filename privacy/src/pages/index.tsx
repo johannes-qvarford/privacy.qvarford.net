@@ -26,6 +26,7 @@ export default function Home() {
                 <Item link='https://dokuwiki.privacy.qvarford.net' name='Dokuwiki'/>
                 <Item link='https://monica.privacy.qvarford.net' name='Monica'/>
                 <Item link='https://szurubooru.privacy.qvarford.net' name="Szurubooru"/>
+                <Item link='https://giraffeed.privacy.qvarford.net' name="Giraffeed"/>
             </ul>
         </nav>
       </main>
