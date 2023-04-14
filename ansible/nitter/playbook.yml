@@ -2,49 +2,12 @@
   hosts: all
   vars:
     app: nitter
-    target: '{{ apps_directory }}/{{ app }}'
   tasks:
-  # - name: Ping my hosts
-  #   ansible.builtin.ping:
-  # - name: Print message
-  #   ansible.builtin.debug:
-  #     msg: Hello world
-  # - name: Debug command
-  #   become: yes
-  #   become_user: root
-  #   command: pwd
-  #   register: debug
-  # - debug: var=debug
-  - name: Create directory if not already exists
-    file:
-      path: '{{ target }}'
-      state: directory
-
-  - name: Copy Docker-Compose file
-    ansible.builtin.copy:
-      src: docker-compose.yml
-      dest: '{{ target }}/'
-
+  - import_tasks: ../shared/prepare_docker_compose_app.yml
+  
   - name: Copy Nitter configuration file
     ansible.builtin.copy:
       src: nitter_app.conf
       dest: '{{ target }}/'
 
-  - name: Copy NGinx file
-    ansible.builtin.copy:
-      src: '{{ app }}.conf'
-      dest: '{{ nginx_sites_enabled_directory }}/'
-
-  - name: Restart App
-    community.docker.docker_compose:
-      state: present
-      restarted: true
-      pull: true
-      project_src: '{{ target }}'
-
-  - name: Restart NGinx
-    community.docker.docker_compose:
-      state: present
-      restarted: true
-      pull: true
-      project_src: '{{ nginx_app_directory }}'
+  - import_tasks: ../shared/restart_docker_compose_app.yml

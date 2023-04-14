@@ -2,7 +2,6 @@
   hosts: all
   vars:
     app: giraffeed
-    target: '{{ apps_directory }}/{{ app }}'
     pat: !vault |
       $ANSIBLE_VAULT;1.1;AES256
       39316663663030663565626465363734353266623565313631663161396563623864316133313537
@@ -13,21 +12,7 @@
       6263646365663034353261646138303865303430666661316662
     
   tasks:
-  - name: Create directory if not already exists
-    file:
-      path: '{{ target }}'
-      state: directory
-
-  - name: Copy Docker-Compose file
-    ansible.builtin.copy:
-      src: docker-compose.yml
-      dest: '{{ target }}/'
-
-  - name: Copy NGinx file
-    ansible.builtin.copy:
-      src: '{{ app }}.conf'
-      dest: '{{ nginx_sites_enabled_directory }}/'
-
+  # TODO: When adding more custom docker images, extract task and pat
   - name: Docker Login
     community.docker.docker_login:
       registry_url: ghcr.io
@@ -35,16 +20,5 @@
       password: '{{ pat }}'
       reauthorize: false
 
-  - name: Restart App
-    community.docker.docker_compose:
-      state: present
-      restarted: true
-      pull: true
-      project_src: '{{ target }}'
-
-  - name: Restart NGinx
-    community.docker.docker_compose:
-      state: present
-      restarted: true
-      pull: true
-      project_src: '{{ nginx_app_directory }}'
+  - import_tasks: ../shared/prepare_docker_compose_app.yml
+  - import_tasks: ../shared/restart_docker_compose_app.yml

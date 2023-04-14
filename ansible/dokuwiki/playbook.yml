@@ -1,7 +1,7 @@
-- name: Libreddit
+- name: Dokuwiki
   hosts: all
   vars:
-    app: libreddit
+    app: dokuwiki
   tasks:
   - import_tasks: ../shared/prepare_docker_compose_app.yml
   - import_tasks: ../shared/restart_docker_compose_app.yml

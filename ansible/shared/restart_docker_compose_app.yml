@@ -1,0 +1,13 @@
+- name: Restart App
+  community.docker.docker_compose:
+    state: present
+    restarted: true
+    pull: true
+    project_src: '{{ target }}'
+
+- name: Restart NGinx
+  community.docker.docker_compose:
+    state: present
+    restarted: true
+    pull: true
+    project_src: '{{ nginx_app_directory }}'

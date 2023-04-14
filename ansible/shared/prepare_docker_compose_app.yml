@@ -1,0 +1,14 @@
+- name: Create directory if not already exists
+  file:
+    path: '{{ target }}'
+    state: directory
+    
+- name: Copy Docker-Compose file
+  ansible.builtin.copy:
+    src: docker-compose.yml
+    dest: '{{ target }}/'
+
+- name: Copy NGinx file
+  ansible.builtin.copy:
+    src: '{{ app }}.conf'
+    dest: '{{ nginx_sites_enabled_directory }}/'
