@@ -1,0 +1,40 @@
+- name: Szurubooru
+  hosts: all
+  vars:
+    app: szurubooru
+    secret: !vault |
+      $ANSIBLE_VAULT;1.1;AES256
+      33333638393137623130613531656237393962613337643538623662623337663235663239363437
+      3735366566663062623934623231333835303438623761640a303261393733373434353230653462
+      33646166643034633862646565343766663237653636343131326338306232373862363837623734
+      3962386337643338340a343334623762633766393762616264316231373537333264663936646262
+      61623831353836303038653737623765346132633135323239316466343466316136
+  tasks:
+  - import_tasks: ../shared/prepare_docker_compose_app.yml
+
+  - name: Copy extra configuration files
+    ansible.builtin.copy:
+      src: ./files/
+      dest: '{{ target }}/'
+
+  - name: Set the hashing secret.
+    ansible.builtin.replace:
+      path: '{{ target }}/config.yaml'
+      regexp: 'SECRET_REPLACE_ME'
+      replace: '{{ secret }}'
+
+  - name: Temporarily allow anyone to register an account.
+    ansible.builtin.replace:
+      path: '{{ target }}/config.yaml'
+      regexp: 'CREATE_SELF_REPLACE_ME'
+      replace: 'anonymous'
+    when: 'first_run is defined'
+
+  - name: Disallow anyone to register an account once the administrator has been created.
+    ansible.builtin.replace:
+      path: '{{ target }}/config.yaml'
+      regexp: 'CREATE_SELF_REPLACE_ME'
+      replace: 'administrator'
+    when: 'first_run is undefined'
+  
+  - import_tasks: ../shared/restart_docker_compose_app.yml

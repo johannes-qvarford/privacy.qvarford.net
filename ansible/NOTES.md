@@ -9,3 +9,7 @@
 > ansible-vault encrypt_string
 
 > ansible-galaxy collection install community.docker
+
+> apb szurubooru -e first_run=true --ask-vault-pass
+
+> apb szurubooru --ask-vault-pass
