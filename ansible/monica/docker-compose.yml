@@ -9,8 +9,8 @@ services:
       - DB_HOST=monica-db
       - DB_USERNAME=usermonica
       - DB_PASSWORD=secret
-      # Will be generated on the server.
-      - APP_KEY=
+      # Will be replaced when deployed
+      - APP_KEY=APP_KEY_REPLACE_ME
       - APP_URL=https://monica.privacy.qvarford.net
       - APP_ENV=production
     volumes:
