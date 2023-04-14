@@ -1,0 +1,11 @@
+---
+all:
+  hosts:
+      privacy.qvarford.net:
+  vars:
+    remote_user: jq
+    nginx_sites_enabled_directory: /home/jq/tocopy/nginx/sites-enabled
+    nginx_app_directory: /home/jq/apps/nginx
+    apps_directory: /home/jq/apps
+    ansible_become_method: sudo
+    ansible_become_user: root
