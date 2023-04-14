@@ -1,0 +1,35 @@
+- name: Invidious
+  hosts: all
+  vars:
+    app: invidious
+    git_dir: '{{ tmp }}/git-repo'
+  tasks:
+
+  - import_tasks: ../shared/prepare_docker_compose_app.yml
+
+  - name: Create temporary directory if not already exists
+    file:
+      path: '{{ tmp }}'
+      state: directory
+
+  - name: Checkout temporary files neccessary for Docker container
+    ansible.builtin.git:
+      repo: https://github.com/iv-org/invidious.git
+      dest: '{{ tmp }}/git-repo'
+      version: master
+
+  - name: Copy neccessary config files to target
+    ansible.builtin.copy:
+      src: '{{ git_dir }}/config'
+      dest: '{{ target }}/config'
+      remote_src: yes
+      validate: 'test -d {{ target }}/config/sql'
+
+  - name: Copy neccessary docker files to target
+    ansible.builtin.copy:
+      src: '{{ git_dir }}/docker'
+      dest: '{{ target }}/docker'
+      remote_src: yes
+      validate: 'test -f {{ target }}/docker/init-invidious-db.sh'
+
+  - import_tasks: ../shared/restart_docker_compose_app.yml

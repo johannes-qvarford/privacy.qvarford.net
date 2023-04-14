@@ -10,3 +10,4 @@ all:
     ansible_become_method: sudo
     ansible_become_user: root
     target: '{{ apps_directory }}/{{ app }}'
+    tmp: '{{ apps_directory }}/tmp/{{ app }}'
