@@ -1,6 +1,17 @@
 - name: Bootstrapping
   hosts: all
   tasks:
+  # - name: Ping my hosts
+  #   ansible.builtin.ping:
+  # - name: Print message
+  #   ansible.builtin.debug:
+  #     msg: Hello world
+  # - name: Debug command
+  #   become: yes
+  #   become_user: root
+  #   command: pwd
+  #   register: debug
+  # - debug: var=debug
   - name: sudo without password for wheel group
     become: yes
     ansible.builtin.copy:

@@ -1,10 +1,20 @@
-- name: Libreddit
+- name: Nitter
   hosts: all
   vars:
-    app: libreddit
+    app: nitter
     target: '{{ apps_directory }}/{{ app }}'
   tasks:
-
+  # - name: Ping my hosts
+  #   ansible.builtin.ping:
+  # - name: Print message
+  #   ansible.builtin.debug:
+  #     msg: Hello world
+  # - name: Debug command
+  #   become: yes
+  #   become_user: root
+  #   command: pwd
+  #   register: debug
+  # - debug: var=debug
   - name: Create directory if not already exists
     file:
       path: '{{ target }}'
@@ -13,6 +23,11 @@
   - name: Copy Docker-Compose file
     ansible.builtin.copy:
       src: docker-compose.yml
+      dest: '{{ target }}/'
+
+  - name: Copy Nitter configuration file
+    ansible.builtin.copy:
+      src: nitter_app.conf
       dest: '{{ target }}/'
 
   - name: Copy NGinx file
