@@ -1,4 +1,4 @@
-- name: Create directory if not already exists
+- name: Create app directory if not already exists
   file:
     path: '{{ target }}'
     state: directory
