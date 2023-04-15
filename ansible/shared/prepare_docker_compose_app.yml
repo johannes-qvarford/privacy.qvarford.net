@@ -1,5 +1,5 @@
 - name: Create app directory if not already exists
-  file:
+  ansible.builtin.file:
     path: '{{ target }}'
     state: directory
     

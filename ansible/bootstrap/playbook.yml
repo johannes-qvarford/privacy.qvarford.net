@@ -1,23 +1,52 @@
-- name: Bootstrapping
+# This playbook will fail the next time it is run, because the last thing we do is prevent the ansible_user (root) from logging in.
+- name: Primary user
   hosts: all
   vars:
-    remote_user: root
+    ansible_user: root
+    primary_user: jq
   tasks:
-  # - name: Ping my hosts
-  #   ansible.builtin.ping:
-  # - name: Print message
-  #   ansible.builtin.debug:
-  #     msg: Hello world
-  # - name: Debug command
-  #   become: yes
-  #   become_user: root
-  #   command: pwd
-  #   register: debug
-  # - debug: var=debug
-  - name: sudo without password for wheel group
-    become: yes
-    ansible.builtin.copy:
-      content: '%wheel ALL=(ALL:ALL) NOPASSWD:ALL'
-      dest: /etc/sudoers.d/wheel_nopasswd
-      mode: 0440
+  - name: Add primary group
+    ansible.builtin.group:
+      name: '{{ primary_user }}'
+      gid: 1000
+
+  - name: Add primary user
+    ansible.builtin.user:
+      name: '{{ primary_user }}'
+      comment: Johannes Qvarford
+      uid: 1000
+      groups: '{{ primary_user }},sudo'
   
+  - name: Allow sudo without password prompt, for users in sudo group
+    ansible.builtin.copy:
+      content: '%sudo ALL=(ALL:ALL) NOPASSWD:ALL'
+      dest: /etc/sudoers.d/sudo_nopasswd
+      mode: 0440
+
+  - name: Create SSH directory for primary user
+    ansible.builtin.file:
+      path: '/home/{{ primary_user }}/.ssh'
+      state: directory
+      mode: 0700
+      group: '{{ primary_user }}'
+      owner: '{{ primary_user }}'
+  
+  - name: Copy authorized_keys from root user to primary user
+    ansible.builtin.copy:
+      src: /root/.ssh/authorized_keys
+      dest: '/home/{{ primary_user }}/.ssh/authorized_keys'
+      remote_src: true
+      mode: 0600
+      owner: '{{ primary_user }}'
+      group: '{{ primary_user }}'
+
+  - name: Disable root login.
+    ansible.builtin.replace:
+      path: '/etc/ssh/sshd_config'
+      regexp: '^[# ]*PermitRootLogin.*$'
+      replace: 'PermitRootLogin no'
+
+  - name: Reload ssh configuration
+    ansible.builtin.service:
+      name: ssh
+      state: reloaded

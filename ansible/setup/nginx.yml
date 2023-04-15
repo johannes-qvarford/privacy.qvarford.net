@@ -1,15 +1,3 @@
-- name: nginx
-  hosts: all
-  vars:
-    app: nginx
-  tasks:
-  - import_tasks: ../shared/prepare_docker_compose_app.yml
-
-  - name: Copy static resources
-    ansible.posix.synchronize:
-      src: '../../privacy/out/'
-      dest: '{{ target }}/'
-
   - name: "Allow http"
     become: true
     community.general.ufw:
@@ -38,5 +26,3 @@
     become: true
     community.general.ufw:
       state: enabled
-
-  - import_tasks: ../shared/restart_docker_compose_app.yml

@@ -7,7 +7,7 @@ services:
       - 80:80
       - 443:443
     volumes:
-      - /home/jq/tocopy/nginx/sites-enabled:/etc/nginx/conf.d
+      - /home/jq/apps/nginx/sites-enabled:/etc/nginx/conf.d
       - /home/jq/apps/nginx/out:/var/raw
       - /etc/letsencrypt:/ssl:ro
     restart: unless-stopped

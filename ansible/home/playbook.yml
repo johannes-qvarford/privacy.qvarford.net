@@ -1,0 +1,13 @@
+- name: Home
+  hosts: all
+  vars:
+    app: home
+  tasks:
+  - import_tasks: ../shared/prepare_docker_compose_app.yml
+
+  - name: Copy static resources
+    ansible.posix.synchronize:
+      src: '../../privacy/out/'
+      dest: '{{ target }}/'
+
+  - import_tasks: ../shared/restart_docker_compose_app.yml
