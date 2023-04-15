@@ -1,28 +1,3 @@
-  - name: "Allow http"
-    become: true
-    community.general.ufw:
-      rule: allow
-      port: http
-
-  - name: "Allow https"
-    become: true
-    community.general.ufw:
-      rule: allow
-      port: https
-
-  - name: "Allow ssh"
-    become: true
-    community.general.ufw:
-      rule: allow
-      port: ssh
-
-  - name: "Allow local network traffic"
-    become: true
-    community.general.ufw:
-      rule: allow
-      to_ip: 172.17.0.1
-
-  - name: "Enable firewall"
-    become: true
-    community.general.ufw:
-      state: enabled
+- name: Nginx
+  hosts: all
+  tasks:

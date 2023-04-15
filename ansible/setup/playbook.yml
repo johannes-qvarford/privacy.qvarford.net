@@ -1,6 +1,5 @@
-# This playbook will start by logging in as root, and adding the primary user that the following playbooks will in as.
-# In 
-- import_playbook: primary-user.yml
+- import_playbook: docker.yml
+#- import_playbook: nginx.yml
 #- import_playbook: certbot.yml
-#- import_playbook: docker.yml
 #- import_playbook: reboot.yml
+#- import_playbook: firewall.yml
