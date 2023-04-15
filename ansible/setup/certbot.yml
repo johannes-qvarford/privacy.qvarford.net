@@ -1,0 +1,70 @@
+- name: Certbot
+  hosts: all
+  vars:
+    digital_ocean_token: !vault |
+      $ANSIBLE_VAULT;1.1;AES256
+      30646530383164373564333162636566353838666633303931613065366635333161356263626637
+      3830386533323830393162373330313038313661376464350a303964626262306633333233373463
+      66363634643763626537353434366635333036353733343739663165656461623633373563666164
+      3030653639376364350a666335653461326637353135393961343861393365646331633835366138
+      39623533666531323938346539326437376261353533643533343334356235353532343934663531
+      32393664666164393736326435333162653432303864643632626166373430653730653538326564
+      39363263663733373837653261616262613335313765353530656137346666326536346665363533
+      35636231373339363630
+    email: !vault |
+      $ANSIBLE_VAULT;1.1;AES256
+      36346265313838666230643539316565383437653639613138396432386339663531336439653365
+      6433636435616131626132343031626531326239316561380a626634616461626133633432343464
+      37306266363563613365353034333437623636646337356139313732393534663932393462616635
+      3637656237326165360a316539646530633432666664656336333762323166666232666139336666
+      39316666303830636361663837613131393364363130303662386637363834646330
+  tasks:
+  - name: Install core
+    become: true
+    community.general.snap:
+      name:
+      - core
+  - name: Install Certbot
+    become: true
+    community.general.snap:
+      classic: true
+      name:
+      - certbot
+
+  - name: Trust Certbot plugin with root
+    become: true
+    ansible.builtin.command: snap set certbot trust-plugin-with-root=ok
+  
+  - name: Install Certbot DNS DigitalOcean
+    become: true
+    community.general.snap:
+      name:
+      - certbot-dns-digitalocean
+
+  - name: Symbolic link to snap binary
+    become: true
+    ansible.builtin.file:
+      src: /snap/bin/certbot
+      dest: /usr/bin/certbot
+      state: link
+
+  - name: Install DigitalOcean configuration
+    ansible.builtin.copy:
+      content: 'dns_digitalocean_token = {{ digital_ocean_token }}'
+      dest: .digitalocean.ini
+
+  - name: Enable Certbot
+    become: true
+    ansible.builtin.command: |
+      certbot certonly \
+        --dns-digitalocean \
+        --dns-digitalocean-credentials /home/jq/.digitalocean.ini \
+        -d privacy.qvarford.net \
+        -d '*.privacy.qvarford.net' \
+        -m '{{ email }}' \
+        --agree-tos \
+        -n
+  
+  - name: Verify Certbot Installation
+    become: true
+    ansible.builtin.command: certbot renew --dry-run

@@ -1,1 +1,0 @@
-ssh jq@privacy.qvarford.net /bin/bash tocopy/scripts/apps/$1.sh

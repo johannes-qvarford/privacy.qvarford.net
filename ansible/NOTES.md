@@ -12,6 +12,8 @@
 
 > ansible-galaxy collection install community.docker
 
+> ansible-playbook -i inventory.yml setup/certbot.yml --ask-vault-pass
+
 > apb szurubooru -e first_run=true --ask-vault-pass
 
 > apb szurubooru --ask-vault-pass

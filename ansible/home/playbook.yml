@@ -3,11 +3,19 @@
   vars:
     app: home
   tasks:
-  - import_tasks: ../shared/prepare_docker_compose_app.yml
-
+  - name: Copy NGinx file
+    ansible.builtin.copy:
+      src: '{{ app }}.conf'
+      dest: '{{ nginx_sites_enabled_directory }}/'
+      
   - name: Copy static resources
     ansible.posix.synchronize:
       src: '../../privacy/out/'
-      dest: '{{ target }}/'
+      dest: '{{ nginx_app_directory }}/out/'
 
-  - import_tasks: ../shared/restart_docker_compose_app.yml
+  - name: Restart NGinx
+    community.docker.docker_compose:
+      state: present
+      restarted: true
+      pull: true
+      project_src: '{{ nginx_app_directory }}'
