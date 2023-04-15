@@ -17,6 +17,11 @@
       path: '{{ nginx_sites_enabled_directory }}/'
       state: directory
 
+  - name: Create out directory
+    ansible.builtin.file:
+      path: '{{ nginx_app_directory }}/out'
+      state: directory
+
   - name: Copy default file
     ansible.builtin.copy:
       src: nginx/default.conf
