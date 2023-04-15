@@ -11,6 +11,7 @@
         - ca-certificates
         - curl
         - software-properties-common
+        - python3-pip
       state: latest
       update_cache: true
 
@@ -29,6 +30,14 @@
       name: docker-ce
       state: latest
       update_cache: true
+
+  - name: Install Docker Module for Python
+    pip:
+      name: docker
+
+  - name: Install Docker-Compose Module for Python
+    pip:
+      name: docker-compose
 
   - name: "Enable docker"
     ansible.builtin.service:

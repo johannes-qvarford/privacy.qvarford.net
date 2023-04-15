@@ -1,3 +1,30 @@
 - name: Nginx
   hosts: all
+
   tasks:
+  - name: Create app directory if not already exists
+    ansible.builtin.file:
+      path: '{{ nginx_app_directory }}'
+      state: directory
+      
+  - name: Copy Docker-Compose file
+    ansible.builtin.copy:
+      src: nginx/docker-compose.yml
+      dest: '{{ nginx_app_directory }}/'
+
+  - name: Create sites-enabled directory
+    ansible.builtin.file:
+      path: '{{ nginx_sites_enabled_directory }}/'
+      state: directory
+
+  - name: Copy default file
+    ansible.builtin.copy:
+      src: nginx/default.conf
+      dest: '{{ nginx_sites_enabled_directory }}/default.conf'
+
+  - name: Restart NGinx
+    become: true
+    community.docker.docker_compose:
+      state: present
+      pull: true
+      project_src: '{{ nginx_app_directory }}'
