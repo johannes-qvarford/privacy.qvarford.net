@@ -11,3 +11,5 @@ all:
     ansible_become_user: root
     target: '{{ apps_directory }}/{{ app }}'
     tmp: '{{ apps_directory }}/tmp/{{ app }}'
+    restart_app_condition: false
+    restart_nginx_condition: false

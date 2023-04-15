@@ -4,16 +4,21 @@
     app: home
   tasks:
   - name: Copy NGinx file
+    register: nginx_conf
     ansible.builtin.copy:
       src: '{{ app }}.conf'
       dest: '{{ nginx_sites_enabled_directory }}/'
-      
+
   - name: Copy static resources
+    register: nginx_out
     ansible.posix.synchronize:
       src: '../../privacy/out/'
       dest: '{{ nginx_app_directory }}/out/'
 
+
+  # TODO: Make it conditional - only restart when the nginx file has changed.
   - name: Restart NGinx
+    when: nginx_conf is changed or nginx_out is changed
     community.docker.docker_compose:
       state: present
       restarted: true

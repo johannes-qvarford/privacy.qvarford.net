@@ -27,3 +27,4 @@ services:
     volumes:
       - /home/jq/apps/monica/mysql:/var/lib/mysql
     restart: always
+    

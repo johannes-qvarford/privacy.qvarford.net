@@ -19,22 +19,34 @@
 
   - name: Set the hashing secret.
     ansible.builtin.replace:
-      path: '{{ target }}/config.yaml'
+      path: '{{ target }}/config.template.yaml'
       regexp: 'SECRET_REPLACE_ME'
       replace: '{{ secret }}'
 
   - name: Temporarily allow anyone to register an account.
     ansible.builtin.replace:
-      path: '{{ target }}/config.yaml'
+      path: '{{ target }}/config.template.yaml'
       regexp: 'CREATE_SELF_REPLACE_ME'
       replace: 'anonymous'
     when: 'first_run is defined'
 
   - name: Disallow anyone to register an account once the administrator has been created.
     ansible.builtin.replace:
-      path: '{{ target }}/config.yaml'
+      path: '{{ target }}/config.template.yaml'
       regexp: 'CREATE_SELF_REPLACE_ME'
       replace: 'administrator'
     when: 'first_run is undefined'
+
+  - name: Rename config template
+    register: config_file
+    ansible.builtin.copy:
+      src: '{{ target }}/config.template.yaml'
+      dest: '{{ target }}/config.yaml'
+      remote_src: true
+  
+  - name: Determine if app should be reloaded
+    ansible.builtin.set_fact:
+      restart_app_condition: true
+    when: config_file is changed
   
   - import_tasks: ../shared/restart_docker_compose_app.yml

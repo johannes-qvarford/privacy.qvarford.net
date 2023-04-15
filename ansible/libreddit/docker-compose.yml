@@ -17,3 +17,4 @@ services:
       - LIBREDDIT_DEFAULT_USE_HLS=on
       - LIBREDDIT_DEFAULT_HIDE_HLS_NOTIFICATION=on
     restart: unless-stopped
+    

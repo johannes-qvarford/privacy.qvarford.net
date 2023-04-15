@@ -16,6 +16,7 @@
       comment: Johannes Qvarford
       uid: 1000
       groups: '{{ primary_user }},sudo'
+      shell: /bin/bash
   
   - name: Allow sudo without password prompt, for users in sudo group
     ansible.builtin.copy:

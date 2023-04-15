@@ -4,11 +4,21 @@
     state: directory
     
 - name: Copy Docker-Compose file
+  register: docker_compose_file
   ansible.builtin.copy:
     src: docker-compose.yml
     dest: '{{ target }}/'
+  when: docker_compose_template is not defined
+
+- name: Copy Docker-Compose template
+  register: docker_compose_file
+  ansible.builtin.copy:
+    src: docker-compose.template.yml
+    dest: '{{ target }}/'
+  when: docker_compose_template is defined
 
 - name: Copy NGinx file
+  register: nginx_file
   ansible.builtin.copy:
     src: '{{ app }}.conf'
     dest: '{{ nginx_sites_enabled_directory }}/'

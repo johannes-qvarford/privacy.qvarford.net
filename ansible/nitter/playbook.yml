@@ -6,8 +6,14 @@
   - import_tasks: ../shared/prepare_docker_compose_app.yml
   
   - name: Copy Nitter configuration file
+    register: nitter_app_conf
     ansible.builtin.copy:
       src: nitter_app.conf
       dest: '{{ target }}/'
+
+  - name: Determine if app should be reloaded
+    ansible.builtin.set_fact:
+      restart_app_condition: true
+    when: nitter_app_conf is changed
 
   - import_tasks: ../shared/restart_docker_compose_app.yml
