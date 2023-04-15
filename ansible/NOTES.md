@@ -4,6 +4,8 @@
 
 > apb bootstrap --ask-become-pass
 
+> apb nginx --ask-become-pass
+
 > apb giraffeed --ask-vault-pass
 
 > ansible-vault encrypt_string
