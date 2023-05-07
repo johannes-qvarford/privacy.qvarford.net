@@ -21,7 +21,7 @@ thumbnails:
 
 # settings used to download files from the web on behalf of the api users
 user_agent:
-max_dl_filesize: 25.0E+6 # maximum filesize limit in bytes
+max_dl_filesize: 100.0E+6 # maximum filesize limit in bytes
 
 # automatically convert animated GIF uploads to video formats
 convert:
