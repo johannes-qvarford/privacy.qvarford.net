@@ -1,0 +1,6 @@
+- name: Docker Login
+  community.docker.docker_login:
+    registry_url: ghcr.io
+    username: johannes-qvarford
+    password: '{{ pat }}'
+    reauthorize: false

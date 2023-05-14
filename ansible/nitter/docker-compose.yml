@@ -3,11 +3,10 @@ version: "3"
 services:
 
   nitter:
-  # 
-    image: zedeus/nitter:latest
+    image: ghcr.io/johannes-qvarford/nitter:jq
     container_name: nitter
     ports:
-      - "8080:8080" # Replace with "8080:8080" if you don't use a reverse proxy
+      - "8080:8080"
     volumes:
       - ./nitter_app.conf:/src/nitter.conf:ro
     depends_on:
