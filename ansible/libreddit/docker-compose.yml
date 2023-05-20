@@ -2,7 +2,7 @@ version: "3"
 
 services:
   web:
-    image: spikecodes/libreddit:latest
+    image: ghcr.io/johannes-qvarford/libreddit:jq
     container_name: "libreddit"
     ports:
       - 8888:8080
