@@ -4,6 +4,5 @@
 - import_playbook: invidious/playbook.yml
 - import_playbook: libreddit/playbook.yml
 - import_playbook: miniflux/playbook.yml
-- import_playbook: monica/playbook.yml
 - import_playbook: nitter/playbook.yml
 - import_playbook: szurubooru/playbook.yml
