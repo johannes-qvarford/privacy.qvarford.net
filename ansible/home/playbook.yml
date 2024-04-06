@@ -22,5 +22,5 @@
     community.docker.docker_compose:
       state: present
       restarted: true
-      pull: true
+      pull: always
       project_src: '{{ nginx_app_directory }}'
