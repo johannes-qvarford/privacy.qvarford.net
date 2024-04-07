@@ -1,5 +1,3 @@
-version: "3"
-
 services:
   giraffeed:
     image: ghcr.io/johannes-qvarford/giraffeed:main

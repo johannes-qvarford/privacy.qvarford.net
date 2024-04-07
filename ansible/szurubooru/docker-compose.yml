@@ -1,5 +1,3 @@
-version: '2'
-
 services:
   szurubooru-server:
     image: szurubooru/server:latest

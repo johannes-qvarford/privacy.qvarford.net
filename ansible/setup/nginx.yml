@@ -29,7 +29,7 @@
 
   - name: Restart NGinx
     become: true
-    community.docker.docker_compose:
+    community.docker.docker_compose_v2:
       state: present
-      pull: true
+      pull: always
       project_src: '{{ nginx_app_directory }}'
