@@ -20,7 +20,6 @@
   - name: Restart NGinx
     when: nginx_conf is changed or nginx_out is changed
     community.docker.docker_compose:
-      state: present
-      restarted: true
+      state: restarted
       pull: always
       project_src: '{{ nginx_app_directory }}'

@@ -6,14 +6,12 @@
 
 - name: Restart App
   community.docker.docker_compose_v2:
-    state: present
-    restarted: true
+    state: restarted
     project_src: '{{ target }}'
   when: 'docker_pull_app is changed or docker_compose_file is changed or (restart_app_condition is defined and restart_app_condition)'
 
 - name: Restart NGinx
   community.docker.docker_compose_v2:
-    state: present
-    restarted: true
+    state: restarted
     project_src: '{{ nginx_app_directory }}'
   when: 'nginx_file is changed or (restart_nginx_condition is defined and restart_nginx_condition)'

@@ -1,0 +1,13 @@
+- name: Redlib
+  hosts: all
+  vars:
+    app: redlib
+  tasks:
+
+  - import_tasks: ../shared/prepare_docker_compose_app.yml
+  - name: Copy .env file
+    register: nginx_conf
+    ansible.builtin.copy:
+      src: '.env'
+      dest: '{{ target }}/'
+  - import_tasks: ../shared/restart_docker_compose_app.yml
