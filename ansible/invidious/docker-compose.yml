@@ -1,7 +1,7 @@
 services:
   invidious:
-    image: ghcr.io/johannes-qvarford/invidious:jq
-#    image: quay.io/invidious/invidious:latest
+    #    image: ghcr.io/johannes-qvarford/invidious:jq
+    image: quay.io/invidious/invidious:master
     restart: unless-stopped
     ports:
       - "3000:3000"
